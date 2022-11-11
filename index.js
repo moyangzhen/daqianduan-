@@ -28,6 +28,31 @@ router.post('/post',async(ctx)=>{
         ctx.body = {...body}
       }
 })
+// 作业
+router.post('/user',ctx=>{
+    const {role}=ctx.request.header;
+    const {name,age}=ctx.request.query;
+    if(role!=='admin'){
+        ctx.body={
+            "code":401,
+            "msg":"unanthorized"
+        }
+    }else if(!name||!age) {
+        ctx.body={
+            "code":404,
+            "msg":"name和age不能为空"
+        }
+    }else{
+        ctx.body={
+            "code":200,
+            "data":{
+                name:name,
+                age:age
+            },
+            "msg":"上传成功"
+        }
+    }
+})
 app.use(cors({
     origin: function (ctx) {
         // if (ctx.url === '/test') {
